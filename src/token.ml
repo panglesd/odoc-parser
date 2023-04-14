@@ -20,7 +20,8 @@ type tag =
     | `Canonical of string
     | `Inline
     | `Open
-    | `Closed ] ]
+    | `Closed
+    | `Hidden] ]
 
 type t =
   [ (* End of input. *)
@@ -105,6 +106,7 @@ let print : [< t ] -> string = function
   | `Tag `Inline -> "'@inline'"
   | `Tag `Open -> "'@open'"
   | `Tag `Closed -> "'@closed'"
+  | `Tag `Hidden -> "'@hidden"
   | `Raw_markup (None, _) -> "'{%...%}'"
   | `Raw_markup (Some target, _) -> "'{%" ^ target ^ ":...%}'"
 
@@ -159,6 +161,7 @@ let describe : [< t | `Comment ] -> string = function
   | `Tag `Inline -> "'@inline'"
   | `Tag `Open -> "'@open'"
   | `Tag `Closed -> "'@closed'"
+  | `Tag `Hidden -> "'@hidden"
   | `Comment -> "top-level text"
 
 let describe_element = function
